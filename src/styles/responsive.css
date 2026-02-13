@@ -83,11 +83,7 @@
   }
 
   .bouquet-message-wrap {
-    position: fixed;
-    bottom: max(1.5rem, env(safe-area-inset-bottom));
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
+    padding: 0.75rem 0;
   }
 
   .bouquet-message-toggle {
@@ -114,11 +110,6 @@
   }
 
   .bouquet-hint {
-    position: fixed;
-    bottom: max(0.5rem, env(safe-area-inset-bottom));
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 99;
     font-size: 0.65rem;
   }
 
@@ -309,10 +300,6 @@
     font-size: 1.25rem;
   }
 
-  .bouquet-message-wrap {
-    bottom: 2rem;
-  }
-
   .bouquet-message {
     max-width: min(400px, 85vw);
     max-height: 70vh;
@@ -333,12 +320,8 @@
   }
 }
 
-/* Small phones: bouquet message wrap */
+/* Small phones: bouquet message */
 @media (max-width: 540px) {
-  .bouquet-message-wrap {
-    bottom: 1.5rem;
-  }
-
   .bouquet-message {
     max-width: min(320px, 90vw);
   }
