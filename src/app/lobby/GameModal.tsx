@@ -8,10 +8,8 @@ const PANEL_PAD = 24;
 const NO_RUN_RADIUS = 90;
 const NO_RUN_COOLDOWN_MS = 220;
 
-import { asset } from "@/lib/basePath";
-
 /** ใส่ไฟล์ GIF ใน public/images/FRAME/gif/ แล้วตั้งชื่อเป็น coupon-kiss.gif หรือแก้ path ด้านล่าง */
-const COUPON_KISS_GIF = asset("/images/FRAME/gif/coupon-kiss.gif");
+const COUPON_KISS_GIF = "/images/FRAME/gif/coupon-kiss.gif";
 
 function randomPosition(panelRef: React.RefObject<HTMLElement | null>): { left: number; top: number } {
   const panel = panelRef.current;
