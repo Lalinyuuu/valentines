@@ -1,0 +1,109 @@
+/* ═══ MODALS (共通) ═══ */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal.is-open .modal-panel {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(60, 45, 60, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+
+.modal-panel {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--modal-bg);
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+  padding: 2rem;
+  transform: translateY(16px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(90, 74, 90, 0.45);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.modal-close:hover {
+  color: var(--text);
+}
+
+/* ═══ Letter Modal ═══ */
+.modal-panel-letter {
+  max-width: 440px;
+}
+
+.letter-content {
+  padding: 0.25rem 0;
+}
+
+.letter-title {
+  font-family: var(--font-pixel);
+  font-size: 1.15rem;
+  font-weight: 400;
+  margin: 0 0 1.25rem;
+  color: rgba(90, 74, 90, 0.9);
+  letter-spacing: 0.02em;
+}
+
+.letter-body {
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.75;
+  color: rgba(107, 91, 107, 0.9);
+  margin-bottom: 1.5rem;
+}
+
+.letter-body p {
+  margin: 0 0 0.75rem;
+}
+
+.letter-body p:last-child {
+  margin-bottom: 0;
+}
+
+.letter-signature {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: rgba(90, 74, 90, 0.7);
+  margin: 0;
+}
+

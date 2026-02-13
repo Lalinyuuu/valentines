@@ -1,0 +1,536 @@
+/* ═══ LOVE LOBBY ═══ */
+.lobby {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  position: relative;
+}
+
+/* กล่องแมพให้สัดส่วนตรงกับรูป lobby (ปรับ aspect-ratio ให้ตรงกับรูปจริง เช่น 16/9, 1 เป็นสี่เหลี่ยมจัตุรัส) */
+.lobby-map {
+  position: relative;
+  width: min(420px, 95vw);
+  aspect-ratio: 4 / 3;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.room-bg {
+  position: absolute;
+  inset: 0;
+  background: url(/images/MAP/lobby.png) center / contain no-repeat;
+  background-color: rgba(255, 240, 245, 0.35);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+  overflow: hidden;
+}
+
+/* ซ่อนของตกแต่งเดิมเมื่อใช้ภาพ lobby — เหลือแค่ปุ่มกดได้ */
+.lobby-map .zone-cozy .window,
+.lobby-map .zone-cozy .lamp,
+.lobby-map .zone-cozy .bed {
+  display: none;
+}
+.lobby-map .zone-desk .table-surface {
+  display: none;
+}
+
+.zone {
+  position: absolute;
+  inset: 8% 8% 10% 8%;
+}
+
+/* Avatar ที่เดินใน lobby — ขนาดใหญ่ขึ้น */
+.player-avatar {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  left: 50%;
+  top: 78%;
+  transform: translate(-50%, -100%);
+  background-image: url(/images/MAP/char-straight.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  transition: background-image 0.1s ease;
+}
+
+/* ทิศทางการเดิน */
+.player-avatar.facing-up {
+  background-image: url(/images/MAP/char-back.png);
+}
+
+.player-avatar.facing-down {
+  background-image: url(/images/MAP/char-straight.png);
+}
+
+.player-avatar.facing-left {
+  background-image: url(/images/MAP/char-left.png);
+}
+
+.player-avatar.facing-right {
+  background-image: url(/images/MAP/char-right.png);
+}
+
+/* Hint การโต้ตอบ object ใกล้ตัว */
+.interaction-hint {
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  transform: translateX(-50%);
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(212, 86, 140, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  color: rgba(107, 91, 107, 0.8);
+  z-index: 2;
+}
+
+.interaction-hint-key {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  padding: 0.08rem 0.35rem;
+  border-radius: 4px;
+  background: rgba(212, 86, 140, 0.08);
+  color: rgba(90, 74, 90, 0.85);
+}
+
+.interaction-hint-text {
+  white-space: nowrap;
+}
+
+.interaction-hint-btn {
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  background: inherit;
+  padding: inherit;
+  border-radius: inherit;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.interaction-hint-btn:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.interaction-hint-btn:active {
+  transform: translateX(-50%) scale(0.96);
+}
+
+/* D-pad สำหรับมือถือ — แสดงเฉพาะจอเล็ก */
+.lobby-dpad {
+  display: none;
+  position: fixed;
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  left: max(1rem, env(safe-area-inset-left));
+  z-index: 10;
+  width: 112px;
+  height: 112px;
+  grid-template-columns: 1fr 36px 1fr;
+  grid-template-rows: 1fr 36px 1fr;
+  grid-template-areas:
+    ". up ."
+    "left . right"
+    ". down .";
+  gap: 4px;
+  padding: 8px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(212, 86, 140, 0.12);
+}
+
+.lobby-dpad .dpad-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 248, 252, 0.95);
+  color: var(--text);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lobby-dpad .dpad-btn:hover {
+  background: rgba(232, 200, 220, 0.4);
+}
+
+.lobby-dpad .dpad-btn:active {
+  transform: scale(0.92);
+}
+
+.dpad-up   { grid-area: up; }
+.dpad-down { grid-area: down; }
+.dpad-left { grid-area: left; }
+.dpad-right { grid-area: right; }
+
+@media (max-width: 768px) {
+  .lobby-dpad {
+    display: grid;
+  }
+}
+
+.window {
+  position: absolute;
+  top: 12%;
+  right: 10%;
+  width: 28%;
+  aspect-ratio: 1;
+}
+
+.window-frame {
+  position: absolute;
+  inset: -4px;
+  background: linear-gradient(145deg, #c4a8c4, #a88aa8);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.window-glass {
+  position: absolute;
+  inset: 4px;
+  background: linear-gradient(180deg, var(--pastel-sky) 0%, var(--pastel-mint) 100%);
+  border-radius: 4px;
+  opacity: 0.9;
+  background-size: 120% 120%;
+  animation: windowGlowDrift 12s ease-in-out infinite;
+}
+
+@keyframes windowGlowDrift {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 40%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+.lamp {
+  position: absolute;
+  top: 8%;
+  left: 15%;
+  width: 18%;
+  height: 22%;
+}
+
+.lamp-base {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 30px;
+  background: linear-gradient(90deg, #8b7355, #a08060);
+  border-radius: 2px;
+}
+
+.lamp-shade {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 24px;
+  background: linear-gradient(180deg, var(--pastel-peach), var(--pastel-pink));
+  border-radius: 50% 50% 4px 4px;
+  box-shadow: 0 4px 15px rgba(255,200,220,0.6);
+}
+
+.lamp-glow {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 60px;
+  background: radial-gradient(ellipse, var(--lamp-glow), transparent 70%);
+  pointer-events: none;
+  animation: lampBreath 5.5s ease-in-out infinite;
+}
+
+@keyframes lampBreath {
+  0%, 100% {
+    opacity: 0.7;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.06);
+  }
+}
+
+.bed {
+  position: absolute;
+  bottom: 15%;
+  left: 5%;
+  width: 35%;
+  height: 28%;
+}
+
+.bed-base {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--pastel-lavender), #c4b4e0);
+  border-radius: 12px 12px 4px 4px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.bed-pillow {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 45%;
+  height: 35%;
+  background: var(--pastel-peach);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.table {
+  position: absolute;
+  bottom: 18%;
+  right: 8%;
+  width: 42%;
+  height: 22%;
+}
+
+.table-surface {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 55%;
+  background: linear-gradient(180deg, #a08060, #8b6350);
+  border-radius: 6px 6px 2px 2px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+/* ของบนโต๊ะ: จดหมาย + กล้อง */
+.room-item {
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.7);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: visible;
+}
+
+.room-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.room-item:active {
+  transform: scale(0.98);
+}
+
+/* จดหมาย — บนเตียง (มุมขวาของห้อง) ตรงกับ lobby.png */
+.zone-cozy .room-item-letter {
+  right: 8%;
+  top: 36%;
+  left: auto;
+  bottom: auto;
+}
+
+/* Photobooth — บนโซฟา (มุมซ้ายล่าง) ตรงกับ lobby.png */
+.zone-cozy .room-item-photobooth {
+  left: 2%;
+  bottom: 14%;
+  right: auto;
+  top: auto;
+}
+
+.item-icon {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+/* ไอคอนเป็นรูปจาก MAP (letter.png, heart.png) */
+.item-icon-img {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+.item-icon-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.room-item-game .item-icon-img {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.item-sparkle {
+  position: absolute;
+  inset: -4px;
+  border-radius: 14px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.room-item:hover .item-sparkle {
+  opacity: 1;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+  animation: sparkle 0.6s ease infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.05); opacity: 0.9; }
+}
+
+/* โซนหัวใจ — กลางประตูด้านบน ตรงกับ lobby.png (center ของประตูคู่) */
+.poster-area {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.room-item-game {
+  width: 64px;
+  height: 64px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.room-item-game .item-icon {
+  font-size: 2rem;
+}
+
+.lobby-header {
+  text-align: center;
+  z-index: 1;
+}
+
+.lobby-title {
+  font-family: var(--font-pixel);
+  font-size: clamp(1.25rem, 3.5vw, 1.65rem);
+  font-weight: 400;
+  color: rgba(61, 44, 61, 0.9);
+  margin: 0 0 0.2rem;
+  letter-spacing: 0.03em;
+}
+
+.lobby-sub {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: rgba(107, 91, 107, 0.85);
+  margin: 0 0 0.4rem;
+}
+
+.lobby-hint {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: rgba(107, 91, 107, 0.55);
+  margin: 0;
+}
+
+.lobby-hint-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .lobby-hint-desktop {
+    display: none;
+  }
+  .lobby-hint-mobile {
+    display: block;
+  }
+}
+
+/* Background music toggle (lobby) */
+.music-toggle {
+  position: fixed;
+  top: max(1rem, env(safe-area-inset-top));
+  right: max(1rem, env(safe-area-inset-right));
+  z-index: 50;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 2px 12px rgba(61, 44, 61, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.music-toggle:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: scale(1.06);
+}
+.music-toggle:active {
+  transform: scale(0.96);
+}
+.music-toggle-icon {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.lobby-cta {
+  margin-top: 0.75rem;
+}
+
+.btn-3d-bouquet {
+  display: inline-block;
+  font-family: var(--font-pixel);
+  font-size: 0.9rem;
+  padding: 0.55rem 1.3rem;
+  border-radius: 999px;
+  border: none;
+  text-decoration: none;
+  color: var(--text);
+  background: linear-gradient(180deg, var(--pastel-mint), var(--pastel-sky));
+  box-shadow: 0 4px 14px rgba(150, 210, 220, 0.6);
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.btn-3d-bouquet:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(150, 210, 220, 0.7);
+}
+
+.btn-3d-bouquet:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 2px 8px rgba(150, 210, 220, 0.5);
+}
+
