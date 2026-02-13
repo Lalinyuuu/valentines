@@ -1,11 +1,53 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, Component, ReactNode } from "react";
 import { Group } from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment } from "@react-three/drei";
 import { Suspense } from "react";
 
+/* ── Error Boundary ── */
+interface EBProps { fallback: ReactNode; children: ReactNode }
+interface EBState { hasError: boolean }
+
+class CanvasErrorBoundary extends Component<EBProps, EBState> {
+  constructor(props: EBProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  render() {
+    if (this.state.hasError) return this.props.fallback;
+    return this.props.children;
+  }
+}
+
+/* ── Fallback (when 3D fails) ── */
+function FlowerFallback() {
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "rgba(90,74,90,0.7)",
+        gap: "0.75rem",
+      }}
+    >
+      <span style={{ fontSize: "4rem" }}>💐</span>
+      <p style={{ margin: 0, fontSize: "0.85rem", textAlign: "center" }}>
+        Your bouquet is here — just imagine it in 3D!
+      </p>
+    </div>
+  );
+}
+
+/* ── Responsive scale hook ── */
 function useResponsiveScale(desktopScale: number, mobileScale: number, breakpoint = 768) {
   const [scale, setScale] = useState(desktopScale);
 
@@ -21,6 +63,7 @@ function useResponsiveScale(desktopScale: number, mobileScale: number, breakpoin
   return scale;
 }
 
+/* ── 3D Model ── */
 function FlowerModel() {
   const groupRef = useRef<Group>(null);
   const { scene } = useGLTF("/models/flower.glb");
@@ -40,6 +83,7 @@ function FlowerModel() {
   );
 }
 
+/* ── 3D Scene ── */
 function FlowerScene() {
   return (
     <>
@@ -71,16 +115,25 @@ function FlowerScene() {
   );
 }
 
+/* ── Main Export ── */
 export default function FlowerCanvas() {
   return (
-    <Canvas
-      shadows
-      dpr={[1, 2]}
-      camera={{ position: [0, 0, 6], fov: 40 }}
-      style={{ background: "transparent" }}
-      gl={{ alpha: true, preserveDrawingBuffer: true }}
-    >
-      <FlowerScene />
-    </Canvas>
+    <CanvasErrorBoundary fallback={<FlowerFallback />}>
+      <Canvas
+        shadows
+        dpr={[1, 2]}
+        camera={{ position: [0, 0, 6], fov: 40 }}
+        style={{ background: "transparent" }}
+        gl={{
+          alpha: true,
+          preserveDrawingBuffer: true,
+          antialias: true,
+          powerPreference: "default",
+          failIfMajorPerformanceCaveat: false,
+        }}
+      >
+        <FlowerScene />
+      </Canvas>
+    </CanvasErrorBoundary>
   );
 }
