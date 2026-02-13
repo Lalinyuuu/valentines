@@ -1,0 +1,206 @@
+/* ═══ Bouquet Page (3D flower) ═══ */
+/* Intro: ไฟมืด → ค่อยๆ เปิดไฟพร้อมเพลง */
+.bouquet-intro-overlay {
+  position: fixed;
+  inset: 0;
+  background: #0a0610;
+  z-index: 5000;
+  pointer-events: none;
+  animation: bouquetLightsOn 2.6s ease-out forwards;
+}
+
+@keyframes bouquetLightsOn {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.bouquet-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.bouquet-inner {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+.bouquet-header {
+  padding: 1.25rem 1rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.bouquet-header > * {
+  pointer-events: auto;
+}
+
+.bouquet-header-center {
+  position: absolute;
+  left: 50%;
+  top: 1.25rem;
+  transform: translateX(-50%);
+  text-align: center;
+  min-width: 0;
+  max-width: min(90vw, 420px);
+}
+
+.bouquet-header-spacer {
+  flex-shrink: 0;
+  width: 100px;
+}
+
+.bouquet-title {
+  font-family: var(--font-pixel), monospace;
+  font-size: clamp(0.95rem, 3vw, 1.4rem);
+  font-weight: 400;
+  color: rgba(90, 74, 90, 0.85);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.bouquet-page .btn-back {
+  display: inline-block;
+  flex-shrink: 0;
+  padding: 0.4rem 0;
+  font-size: 0.85rem;
+  color: rgba(90, 74, 90, 0.6);
+  text-decoration: none;
+  border: none;
+  background: none;
+  transition: color 0.2s ease;
+}
+
+.bouquet-page .btn-back:hover {
+  color: #d4568c;
+}
+
+.bouquet-page .canvas-container {
+  flex: 1;
+  width: 100%;
+  height: 100vh;
+  min-height: 300px;
+  margin: 0;
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: none;
+  background: transparent;
+}
+
+.bouquet-message-wrap {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.bouquet-message-toggle {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(90, 74, 90, 0.75);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 86, 140, 0.15);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+
+.bouquet-message-toggle:hover {
+  color: #d4568c;
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(212, 86, 140, 0.25);
+}
+
+.bouquet-message {
+  position: relative;
+  text-align: left;
+  padding: 1.75rem 1.5rem;
+  padding-top: 2rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: rgba(45, 31, 45, 0.9);
+  max-width: min(360px, 88vw);
+  max-height: 65vh;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.bouquet-message-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  padding: 0;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: rgba(90, 74, 90, 0.4);
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: color 0.2s;
+}
+
+.bouquet-message-close:hover {
+  color: #d4568c;
+}
+
+.bouquet-message-line {
+  margin: 0 0 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.6;
+}
+
+.bouquet-message-line:first-child {
+  margin-top: 0;
+}
+
+.bouquet-message-line:last-child {
+  margin-bottom: 0;
+}
+
+.bouquet-hint {
+  position: absolute;
+  bottom: 0.9rem;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: rgba(90, 74, 90, 0.4);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  z-index: 10;
+  pointer-events: none;
+}

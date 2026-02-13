@@ -1,0 +1,356 @@
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — ทั้งเว็บ (Lobby + Bouquet) · iPhone 11 Pro Max · iPad
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Small phones (≤540px): single-column photobooth, compact lobby */
+@media (max-width: 540px) {
+  .photobooth-layout {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+/* iPhone 11 Pro Max & similar (≤430px, ~414pt width) */
+@media (max-width: 430px) {
+  html {
+    font-size: 15px;
+  }
+
+  .lobby {
+    padding: 1rem max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+  }
+
+  .lobby-map {
+    width: min(360px, 92vw);
+    margin-bottom: 0.75rem;
+  }
+
+  .player-avatar {
+    width: 56px;
+    height: 56px;
+  }
+
+  .interaction-hint {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.4rem;
+  }
+
+  .interaction-hint-key {
+    font-size: 0.6rem;
+    padding: 0.06rem 0.28rem;
+  }
+
+  .room-item {
+    width: 48px;
+    height: 48px;
+  }
+
+  .room-item-game {
+    width: 56px;
+    height: 56px;
+  }
+
+  .lobby-title {
+    font-size: 1.15rem;
+  }
+
+  .lobby-sub,
+  .lobby-hint {
+    font-size: 0.85rem;
+  }
+
+  .modal {
+    padding: 0.75rem max(0.75rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+  }
+
+  /* Bouquet page */
+  .bouquet-page .bouquet-header {
+    padding: 1rem max(1rem, env(safe-area-inset-right)) 0 max(1rem, env(safe-area-inset-left));
+  }
+
+  .bouquet-header-center {
+    top: 1rem;
+    max-width: min(85vw, 320px);
+  }
+
+  .bouquet-title {
+    font-size: 0.9rem;
+  }
+
+  .bouquet-page .btn-back {
+    font-size: 0.8rem;
+    padding: 0.35rem 0;
+  }
+
+  .bouquet-message-wrap {
+    bottom: max(1.25rem, env(safe-area-inset-bottom));
+  }
+
+  .bouquet-message-toggle {
+    padding: 0.6rem 1.1rem;
+    min-height: 44px;
+    font-size: 0.8rem;
+  }
+
+  .bouquet-message {
+    max-width: min(300px, 92vw);
+    max-height: 60vh;
+    padding: 1.5rem 1.25rem;
+    padding-top: 1.75rem;
+    font-size: 0.85rem;
+  }
+
+  .bouquet-message-close {
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .bouquet-hint {
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    font-size: 0.65rem;
+  }
+
+  .bouquet-header-spacer {
+    width: 72px;
+  }
+
+  .bouquet-page .canvas-container {
+    min-height: 280px;
+  }
+
+  .modal-panel {
+    max-height: 85vh;
+    padding: 1.25rem 1rem;
+    border-radius: 14px;
+  }
+
+  .modal-close {
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .modal-panel-photobooth {
+    padding: 1.25rem 1rem;
+  }
+
+  .photobooth-header {
+    font-size: 1.05rem;
+  }
+
+  .photobooth-sub {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .pb-chip {
+    min-height: 36px;
+    padding: 0 0.65rem;
+  }
+
+  .pb-sticker-btn,
+  .sticker-opt {
+    width: 40px;
+    height: 40px;
+  }
+
+  .btn-snap,
+  .btn-retake {
+    padding: 0.6rem 1rem;
+    min-height: 44px;
+  }
+
+  .snap-actions,
+  .strip-actions {
+    gap: 0.5rem;
+  }
+
+  .modal-panel-game {
+    max-width: 100%;
+    padding: 1.25rem 1rem;
+  }
+
+  .game-title {
+    font-size: 1.1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .btn-yes {
+    font-size: 1.25rem;
+    padding: 0.75rem 1.5rem;
+    min-height: 48px;
+  }
+
+  .btn-no {
+    padding: 0.5rem 0.85rem;
+    min-height: 44px;
+  }
+
+  .proposal-headline {
+    font-size: 1.5rem;
+  }
+
+  .proposal-text {
+    font-size: 0.95rem;
+  }
+
+  .btn-coupon {
+    padding: 0.6rem 1.25rem;
+    min-height: 44px;
+  }
+
+  .letter-title {
+    font-size: 1rem;
+  }
+
+  .letter-body {
+    font-size: 0.9rem;
+  }
+}
+
+/* iPad portrait & small tablet (768px–1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .lobby {
+    padding: 2rem;
+  }
+
+  .lobby-map {
+    width: min(520px, 55vw);
+    margin-bottom: 1.25rem;
+  }
+
+  .player-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .room-item {
+    width: 58px;
+    height: 58px;
+  }
+
+  .room-item-game {
+    width: 70px;
+    height: 70px;
+  }
+
+  .lobby-title {
+    font-size: 1.5rem;
+  }
+
+  .modal-panel {
+    max-width: 560px;
+    max-height: 88vh;
+    padding: 2rem 1.75rem;
+  }
+
+  .modal-panel-photobooth {
+    max-width: 640px;
+    padding: 2rem 1.75rem;
+  }
+
+  .photobooth-layout {
+    gap: 2rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .modal-panel-letter {
+    max-width: 480px;
+  }
+
+  .modal-panel-game {
+    max-width: 420px;
+    padding: 1.75rem;
+  }
+
+  .game-title {
+    font-size: 1.35rem;
+  }
+
+  .btn-yes {
+    font-size: 1.6rem;
+    padding: 1rem 2.25rem;
+  }
+
+  .proposal-headline {
+    font-size: 1.9rem;
+  }
+
+  /* Bouquet page */
+  .bouquet-inner {
+    max-width: 90vw;
+  }
+
+  .bouquet-header {
+    padding: 1.5rem 1.5rem;
+  }
+
+  .bouquet-header-center {
+    top: 1.5rem;
+    max-width: min(90vw, 480px);
+  }
+
+  .bouquet-title {
+    font-size: 1.25rem;
+  }
+
+  .bouquet-message-wrap {
+    bottom: 2rem;
+  }
+
+  .bouquet-message {
+    max-width: min(400px, 85vw);
+    max-height: 70vh;
+    font-size: 0.95rem;
+  }
+
+  .bouquet-message-toggle {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
+  }
+
+  .bouquet-hint {
+    font-size: 0.75rem;
+  }
+
+  .bouquet-header-spacer {
+    width: 120px;
+  }
+}
+
+/* Small phones: bouquet message wrap */
+@media (max-width: 540px) {
+  .bouquet-message-wrap {
+    bottom: 1.5rem;
+  }
+
+  .bouquet-message {
+    max-width: min(320px, 90vw);
+  }
+}
+
+/* iPad landscape: modals + bouquet */
+@media (min-width: 1024px) and (max-height: 768px) {
+  .modal-panel {
+    max-height: 90vh;
+  }
+
+  .modal-panel-photobooth {
+    max-width: min(600px, 90vw);
+  }
+
+  .bouquet-inner {
+    height: 100vh;
+  }
+
+  .bouquet-message {
+    max-height: 65vh;
+  }
+}

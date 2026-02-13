@@ -1,0 +1,56 @@
+/* ═══════════════════════════════════════════════════════════════
+   Valentine — Love Lobby
+   Base styles: Variables + Reset
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Pastel pride (subtle) */
+  --pastel-pink: #ffc8dd;
+  --pastel-peach: #ffd6e0;
+  --pastel-yellow: #fff4b0;
+  --pastel-mint: #c7f0db;
+  --pastel-sky: #b8e0f6;
+  --pastel-lavender: #d4c4f4;
+  --pastel-rose: #f4c4d4;
+  /* Room */
+  --wall: #f8f0f5;
+  --floor: #e8dce8;
+  --lamp-glow: rgba(255, 200, 220, 0.4);
+  --window-tint: rgba(184, 224, 246, 0.25);
+  /* UI */
+  --modal-bg: rgba(255, 255, 255, 0.95);
+  --modal-backdrop: rgba(80, 60, 80, 0.35);
+  --text: #3d2c3d;
+  --text-soft: #6b5b6b;
+  /* Fonts */
+  --font-pixel: "Silkscreen", monospace;
+  --font-body: "Jost", sans-serif;
+  /* Responsive breakpoints (for reference in comments only) */
+  /* --bp-phone: 430px; iPhone 11 Pro Max ~414 */
+  /* --bp-sm: 540px; --bp-tablet: 768px; --bp-ipad: 1024px; */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--text);
+  background: linear-gradient(180deg, var(--wall) 0%, var(--floor) 100%);
+  overflow-x: hidden;
+}
+
+#app {
+  min-height: 100vh;
+  position: relative;
+}
