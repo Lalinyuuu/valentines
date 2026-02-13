@@ -4,6 +4,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "3RDYUUU",
   description: "Valentine Love Lobby with cozy Gather-like room.",
+  icons: {
+    icon: "/images/MAP/heart.png",
+  },
 };
 
 export const viewport: Viewport = {
