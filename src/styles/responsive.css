@@ -63,6 +63,30 @@
     padding: 0.75rem max(0.75rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
   }
 
+  /* Kiss GIF popup — ย่อให้พอดีจอมือถือ */
+  .coupon-gif-wrap {
+    max-width: min(300px, 85vw);
+    padding: 0.75rem;
+  }
+
+  .coupon-gif-title {
+    font-size: 0.8rem;
+    margin: 0 0 0.5rem;
+    padding-right: 1.75rem;
+  }
+
+  .coupon-gif-close {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+    top: 0.4rem;
+    right: 0.4rem;
+  }
+
+  .coupon-gif-img {
+    border-radius: 8px;
+  }
+
   /* Bouquet page */
   .bouquet-page .bouquet-header {
     padding: 1rem max(1rem, env(safe-area-inset-right)) 0 max(1rem, env(safe-area-inset-left));
