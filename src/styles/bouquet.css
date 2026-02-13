@@ -98,7 +98,7 @@
 .bouquet-page .canvas-container {
   flex: 1;
   width: 100%;
-  min-height: 300px;
+  min-height: 0;
   margin: 0;
   border-radius: 0;
   overflow: hidden;
@@ -106,12 +106,28 @@
   background: transparent;
 }
 
+/* Fixed bottom layer — separate from WebGL canvas stacking context */
+.bouquet-bottom-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1rem;
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  pointer-events: none;
+}
+
+.bouquet-bottom-fixed > * {
+  pointer-events: auto;
+}
+
 .bouquet-message-wrap {
-  position: relative;
-  z-index: 10;
   text-align: center;
-  padding: 1rem 0;
-  flex-shrink: 0;
+  margin-bottom: 0.25rem;
 }
 
 .bouquet-message-toggle {
@@ -193,13 +209,11 @@
 
 .bouquet-hint {
   margin: 0;
-  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
   font-size: 0.7rem;
   font-weight: 400;
   color: rgba(90, 74, 90, 0.4);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   text-align: center;
-  flex-shrink: 0;
   pointer-events: none;
 }

@@ -65,7 +65,10 @@ export default function BouquetPage() {
         <div className="canvas-container">
           <FlowerCanvas />
         </div>
+      </div>
 
+      {/* Fixed overlay — outside bouquet-inner so WebGL canvas cannot cover it */}
+      <div className="bouquet-bottom-fixed">
         <div className="bouquet-message-wrap">
           {messageOpen ? (
             <div className="bouquet-message">
@@ -109,7 +112,6 @@ export default function BouquetPage() {
             </button>
           )}
         </div>
-
         <p className="bouquet-hint">Drag to rotate / scroll to zoom</p>
       </div>
     </div>
