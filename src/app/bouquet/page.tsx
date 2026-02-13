@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import FlowerCanvas from "@/components/FlowerCanvas";
+import dynamic from "next/dynamic";
 import BackgroundMusic from "@/components/BackgroundMusic";
+
+const FlowerCanvas = dynamic(() => import("@/components/FlowerCanvas"), { ssr: false });
 import { useConfetti } from "@/hooks/useConfetti";
 
 export default function BouquetPage() {
