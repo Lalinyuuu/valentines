@@ -139,15 +139,13 @@
   bottom: max(1.25rem, env(safe-area-inset-bottom));
   left: max(1rem, env(safe-area-inset-left));
   z-index: 10;
-  width: 112px;
-  height: 112px;
-  grid-template-columns: 1fr 36px 1fr;
-  grid-template-rows: 1fr 36px 1fr;
+  grid-template-columns: repeat(3, 40px);
+  grid-template-rows: repeat(3, 40px);
   grid-template-areas:
     ". up ."
     "left . right"
     ". down .";
-  gap: 4px;
+  gap: 2px;
   padding: 8px;
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.85);
@@ -159,6 +157,7 @@
 .lobby-dpad .dpad-btn {
   width: 36px;
   height: 36px;
+  place-self: center;
   border: none;
   border-radius: 10px;
   background: rgba(255, 248, 252, 0.95);
