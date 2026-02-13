@@ -61,6 +61,9 @@ export default function FlowerCanvas() {
       camera={{ position: [0, 0, 6], fov: 40 }}
       style={{ background: "transparent" }}
       gl={{ alpha: true, preserveDrawingBuffer: true }}
+      onCreated={({ gl }) => {
+        gl.setClearColor(0x000000, 0);
+      }}
     >
       <FlowerScene />
     </Canvas>

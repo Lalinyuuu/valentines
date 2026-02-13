@@ -4,7 +4,10 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import BackgroundMusic from "@/components/BackgroundMusic";
 
-const FlowerCanvas = dynamic(() => import("@/components/FlowerCanvas"), { ssr: false });
+const FlowerCanvas = dynamic(() => import("@/components/FlowerCanvas"), { 
+  ssr: false,
+  loading: () => <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading 3D...</div>
+});
 import { useConfetti } from "@/hooks/useConfetti";
 
 export default function BouquetPage() {
