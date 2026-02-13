@@ -169,6 +169,7 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  overflow-y: auto;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
   animation: couponGifFadeIn 0.25s ease-out;
@@ -186,12 +187,15 @@
 .coupon-gif-wrap {
   position: relative;
   max-width: min(420px, 90vw);
+  max-height: 85vh;
   padding: 1.25rem;
   border-radius: 20px;
   background: linear-gradient(180deg, #fff8fc 0%, #ffe8f2 100%);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
   border: 2px solid rgba(212, 86, 140, 0.25);
   animation: couponGifPop 0.35s ease-out;
+  display: flex;
+  flex-direction: column;
 }
 
 @keyframes couponGifPop {
@@ -237,7 +241,11 @@
   display: block;
   width: 100%;
   height: auto;
+  max-height: 60vh;
+  object-fit: contain;
   border-radius: 12px;
+  flex-shrink: 1;
+  min-height: 0;
 }
 
 .confetti-container {
