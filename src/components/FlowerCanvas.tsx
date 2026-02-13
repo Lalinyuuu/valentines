@@ -1,12 +1,13 @@
 "use client";
 
 import { useRef } from "react";
+import { Group } from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment } from "@react-three/drei";
 import { Suspense } from "react";
 
 function FlowerModel() {
-  const groupRef = useRef<{ rotation: { y: number } } | null>(null);
+  const groupRef = useRef<Group>(null);
   const { scene } = useGLTF("/models/flower.glb");
 
   useFrame((_, delta) => {
@@ -18,11 +19,7 @@ function FlowerModel() {
 
   return (
     <group ref={groupRef}>
-      <primitive
-        object={scene}
-        scale={3.5}
-        position={[0, -0.2, 0]}
-      />
+      <primitive object={scene} scale={3.5} position={[0, -0.2, 0]} />
     </group>
   );
 }
@@ -69,4 +66,3 @@ export default function FlowerCanvas() {
     </Canvas>
   );
 }
-
