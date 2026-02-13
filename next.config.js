@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  turbopack: {},
   webpack: (config) => {
     // Handle GLB/GLTF files
     config.module.rules.push({
