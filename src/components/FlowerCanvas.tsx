@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Group } from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment } from "@react-three/drei";
@@ -24,6 +24,15 @@ function FlowerModel() {
   );
 }
 
+function LoadingBox() {
+  return (
+    <mesh>
+      <boxGeometry args={[1, 1, 1]} />
+      <meshStandardMaterial color="#ffb3d9" wireframe />
+    </mesh>
+  );
+}
+
 function FlowerScene() {
   return (
     <>
@@ -36,7 +45,7 @@ function FlowerScene() {
       />
       <pointLight position={[-10, -10, -10]} intensity={0.5} />
 
-      <Suspense fallback={null}>
+      <Suspense fallback={<LoadingBox />}>
         <FlowerModel />
         <Environment preset="sunset" />
       </Suspense>
@@ -56,13 +65,44 @@ function FlowerScene() {
 }
 
 export default function FlowerCanvas() {
+  const [error, setError] = useState<string | null>(null);
+
+  if (error) {
+    return (
+      <div style={{ 
+        width: '100%', 
+        height: '100%', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        color: 'rgba(107, 91, 107, 0.6)',
+        textAlign: 'center',
+        padding: '2rem'
+      }}>
+        <div>
+          <p>3D model couldn't load</p>
+          <p style={{ fontSize: '0.85rem', marginTop: '0.5rem' }}>Try refreshing or use desktop</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <Canvas
       camera={{ position: [0, 0, 6], fov: 40 }}
       style={{ background: "transparent" }}
-      gl={{ alpha: true, preserveDrawingBuffer: true }}
+      gl={{ 
+        alpha: true, 
+        preserveDrawingBuffer: true,
+        antialias: true,
+        powerPreference: "high-performance"
+      }}
       onCreated={({ gl }) => {
         gl.setClearColor(0x000000, 0);
+      }}
+      onError={(err) => {
+        console.error("Canvas error:", err);
+        setError("Failed to load 3D");
       }}
     >
       <FlowerScene />

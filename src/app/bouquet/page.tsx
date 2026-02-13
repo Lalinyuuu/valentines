@@ -6,7 +6,30 @@ import BackgroundMusic from "@/components/BackgroundMusic";
 
 const FlowerCanvas = dynamic(() => import("@/components/FlowerCanvas"), { 
   ssr: false,
-  loading: () => <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading 3D...</div>
+  loading: () => (
+    <div style={{ 
+      width: '100%', 
+      height: '100%', 
+      display: 'flex', 
+      flexDirection: 'column',
+      alignItems: 'center', 
+      justifyContent: 'center',
+      color: 'rgba(107, 91, 107, 0.6)',
+      gap: '0.5rem'
+    }}>
+      <div style={{
+        width: '40px',
+        height: '40px',
+        border: '3px solid rgba(212, 86, 140, 0.2)',
+        borderTop: '3px solid rgba(212, 86, 140, 0.8)',
+        borderRadius: '50%',
+        animation: 'spin 1s linear infinite'
+      }} />
+      <p style={{ fontSize: '0.9rem' }}>Loading 3D bouquet...</p>
+      <p style={{ fontSize: '0.75rem', opacity: 0.6 }}>(11 MB - may take a moment)</p>
+      <style dangerouslySetInnerHTML={{ __html: '@keyframes spin { to { transform: rotate(360deg); } }' }} />
+    </div>
+  )
 });
 import { useConfetti } from "@/hooks/useConfetti";
 
