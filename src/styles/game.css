@@ -236,10 +236,8 @@
 .coupon-gif-img {
   display: block;
   width: 100%;
-  max-height: 400px;
-  object-fit: cover;
+  height: auto;
   border-radius: 12px;
-  background: transparent;
 }
 
 .confetti-container {
