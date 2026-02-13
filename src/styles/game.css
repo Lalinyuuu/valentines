@@ -185,7 +185,7 @@
 
 .coupon-gif-wrap {
   position: relative;
-  max-width: min(320px, 90vw);
+  max-width: min(420px, 90vw);
   padding: 1.25rem;
   border-radius: 20px;
   background: linear-gradient(180deg, #fff8fc 0%, #ffe8f2 100%);
@@ -236,10 +236,10 @@
 .coupon-gif-img {
   display: block;
   width: 100%;
-  max-height: 280px;
-  object-fit: contain;
+  max-height: 400px;
+  object-fit: cover;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.5);
+  background: transparent;
 }
 
 .confetti-container {
