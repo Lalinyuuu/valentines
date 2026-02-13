@@ -132,7 +132,7 @@
   transform: translateX(-50%) scale(0.96);
 }
 
-/* D-pad สำหรับมือถือ — แสดงเฉพาะจอเล็ก */
+/* D-pad สำหรับ touch screen — แสดงบนอุปกรณ์ที่ไม่มี hover (มือถือ, แท็บเล็ต) */
 .lobby-dpad {
   display: none;
   position: fixed;
@@ -184,7 +184,15 @@
 .dpad-left { grid-area: left; }
 .dpad-right { grid-area: right; }
 
+/* แสดง d-pad บนจอเล็ก (มือถือ) */
 @media (max-width: 768px) {
+  .lobby-dpad {
+    display: grid;
+  }
+}
+
+/* แสดง d-pad บน touch device ทุกขนาด (iPad, tablet) */
+@media (pointer: coarse) {
   .lobby-dpad {
     display: grid;
   }
@@ -466,6 +474,16 @@
 }
 
 @media (max-width: 768px) {
+  .lobby-hint-desktop {
+    display: none;
+  }
+  .lobby-hint-mobile {
+    display: block;
+  }
+}
+
+/* hint สำหรับ touch device (iPad, tablet) */
+@media (pointer: coarse) {
   .lobby-hint-desktop {
     display: none;
   }
