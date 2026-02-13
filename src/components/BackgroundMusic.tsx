@@ -2,9 +2,11 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { asset } from "@/lib/basePath";
+
 export const SONGS = {
-  lobby: "/song/lobbysong.mp3",
-  bouquet: "/song/so easy-Sung Holly.mp3",
+  lobby: asset("/song/lobbysong.mp3"),
+  bouquet: asset("/song/so easy-Sung Holly.mp3"),
 } as const;
 
 type SongId = keyof typeof SONGS;

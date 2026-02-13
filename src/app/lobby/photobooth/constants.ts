@@ -1,5 +1,7 @@
+import { asset } from "@/lib/basePath";
+
 export const STICKER_IMAGE_SRCS = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21].map(
-  (n) => `/images/FRAME/stickers/${n}.png`
+  (n) => asset(`/images/FRAME/stickers/${n}.png`)
 );
 
 export const STICKER_SIZE = 40;
@@ -23,10 +25,10 @@ export const SLOT_H_LANDSCAPE = 160;
 
 export const IMAGE_FRAME_KEYS = ["bow", "cherry", "polaroid", "sun"] as const;
 export const FRAME_IMAGE_PATHS: Record<(typeof IMAGE_FRAME_KEYS)[number], string> = {
-  bow: "/images/FRAME/bow-frame.png",
-  cherry: "/images/FRAME/cherry-frame.png",
-  polaroid: "/images/FRAME/polaroid-frame.png",
-  sun: "/images/FRAME/sun-frame.png",
+  bow: asset("/images/FRAME/bow-frame.png"),
+  cherry: asset("/images/FRAME/cherry-frame.png"),
+  polaroid: asset("/images/FRAME/polaroid-frame.png"),
+  sun: asset("/images/FRAME/sun-frame.png"),
 };
 
 export const GRADIENT_FRAME_STYLES: Record<string, { type: "gradient"; colors: string[] }> = {

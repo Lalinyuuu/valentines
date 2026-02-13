@@ -5,10 +5,11 @@ import { Group } from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment } from "@react-three/drei";
 import { Suspense } from "react";
+import { asset } from "@/lib/basePath";
 
 function FlowerModel() {
   const groupRef = useRef<Group>(null);
-  const { scene } = useGLTF("/models/flower.glb");
+  const { scene } = useGLTF(asset("/models/flower.glb"));
 
   useFrame((_, delta) => {
     const group = groupRef.current;

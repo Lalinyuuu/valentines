@@ -21,7 +21,7 @@
 .room-bg {
   position: absolute;
   inset: 0;
-  background: url(/images/MAP/lobby.png) center / contain no-repeat;
+  background: var(--url-lobby, url(/images/MAP/lobby.png)) center / contain no-repeat;
   background-color: rgba(255, 240, 245, 0.35);
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.05);
@@ -51,7 +51,7 @@
   left: 50%;
   top: 78%;
   transform: translate(-50%, -100%);
-  background-image: url(/images/MAP/char-straight.png);
+  background-image: var(--url-char-straight, url(/images/MAP/char-straight.png));
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -64,19 +64,19 @@
 
 /* ทิศทางการเดิน */
 .player-avatar.facing-up {
-  background-image: url(/images/MAP/char-back.png);
+  background-image: var(--url-char-back, url(/images/MAP/char-back.png));
 }
 
 .player-avatar.facing-down {
-  background-image: url(/images/MAP/char-straight.png);
+  background-image: var(--url-char-straight, url(/images/MAP/char-straight.png));
 }
 
 .player-avatar.facing-left {
-  background-image: url(/images/MAP/char-left.png);
+  background-image: var(--url-char-left, url(/images/MAP/char-left.png));
 }
 
 .player-avatar.facing-right {
-  background-image: url(/images/MAP/char-right.png);
+  background-image: var(--url-char-right, url(/images/MAP/char-right.png));
 }
 
 /* Hint การโต้ตอบ object ใกล้ตัว */

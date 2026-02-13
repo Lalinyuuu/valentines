@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { asset } from "@/lib/basePath";
 import type { ModalId } from "@/app/lobby/useLobbyModals";
 import { useLobbyModals } from "@/app/lobby/useLobbyModals";
 import { usePlayer } from "@/app/lobby/usePlayer";
@@ -94,7 +95,7 @@ export default function Page() {
               onClick={() => openModal("letter")}
             >
               <span className="item-icon item-icon-img">
-                <img src="/images/MAP/letter.png" alt="" />
+                <img src={asset("/images/MAP/letter.png")} alt="" />
               </span>
               <span className="item-sparkle" />
             </button>
@@ -105,7 +106,7 @@ export default function Page() {
               onClick={() => openModal("photobooth")}
             >
               <span className="item-icon item-icon-img">
-                <img src="/images/MAP/camera.png" alt="" />
+                <img src={asset("/images/MAP/camera.png")} alt="" />
               </span>
               <span className="item-sparkle" />
             </button>
@@ -126,7 +127,7 @@ export default function Page() {
                 onClick={() => openModal("game")}
               >
                 <span className="item-icon item-icon-img item-icon-heart">
-                  <img src="/images/MAP/heart.png" alt="" />
+                  <img src={asset("/images/MAP/heart.png")} alt="" />
                 </span>
                 <span className="item-sparkle" />
               </button>

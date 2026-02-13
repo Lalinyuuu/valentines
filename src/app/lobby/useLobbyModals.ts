@@ -4,7 +4,9 @@ import { useCallback, useEffect } from "react";
 
 export type ModalId = "letter" | "photobooth" | "game" | null;
 
-const PICK_SOUND = "/song/pick.mp3";
+import { asset } from "@/lib/basePath";
+
+const PICK_SOUND = asset("/song/pick.mp3");
 
 function playClickSound() {
   try {
