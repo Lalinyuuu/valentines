@@ -253,18 +253,26 @@ export default function PhotoboothModal({ isOpen }: { isOpen: boolean }) {
     setStickers((prev) => prev.map((s) => (s.id === id ? { ...s, rotation: normalized } : s)));
   }, []);
 
+  const getPointerPosition = (e: React.MouseEvent | React.TouchEvent) => {
+    if ('touches' in e && e.touches.length > 0) {
+      return { clientX: e.touches[0].clientX, clientY: e.touches[0].clientY };
+    }
+    return { clientX: (e as React.MouseEvent).clientX, clientY: (e as React.MouseEvent).clientY };
+  };
+
   const handleStripMouseMove = useCallback(
-    (e: React.MouseEvent) => {
+    (e: React.MouseEvent | React.TouchEvent) => {
       const el = stripOverlayRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
+      const { clientX, clientY } = getPointerPosition(e);
 
       if (rotatingStickerId && rotationStartRef.current) {
         const sticker = stickers.find((s) => s.id === rotatingStickerId);
         if (!sticker) return;
         const cx = rect.left + sticker.x * rect.width;
         const cy = rect.top + sticker.y * rect.height;
-        const currentAngleDeg = (Math.atan2(e.clientY - cy, e.clientX - cx) * 180) / Math.PI;
+        const currentAngleDeg = (Math.atan2(clientY - cy, clientX - cx) * 180) / Math.PI;
         const { angle: startAngle, rotation: startRotation } = rotationStartRef.current;
         let delta = currentAngleDeg - startAngle;
         if (delta > 180) delta -= 360;
@@ -278,8 +286,8 @@ export default function PhotoboothModal({ isOpen }: { isOpen: boolean }) {
         if (!sticker) return;
         const cx = rect.left + sticker.x * rect.width;
         const cy = rect.top + sticker.y * rect.height;
-        const dx = e.clientX - cx;
-        const dy = e.clientY - cy;
+        const dx = clientX - cx;
+        const dy = clientY - cy;
         const distance = Math.sqrt(dx * dx + dy * dy);
         const baseDistance =
           (STICKER_SIZE / 2) *
@@ -290,8 +298,8 @@ export default function PhotoboothModal({ isOpen }: { isOpen: boolean }) {
       }
 
       if (draggingId === null || !dragOffsetRef.current) return;
-      const x = (e.clientX - rect.left) / rect.width - dragOffsetRef.current.dx;
-      const y = (e.clientY - rect.top) / rect.height - dragOffsetRef.current.dy;
+      const x = (clientX - rect.left) / rect.width - dragOffsetRef.current.dx;
+      const y = (clientY - rect.top) / rect.height - dragOffsetRef.current.dy;
       updateStickerPosition(draggingId, x, y);
     },
     [
@@ -318,29 +326,30 @@ export default function PhotoboothModal({ isOpen }: { isOpen: boolean }) {
   }, [draggingId]);
 
   const handleStickerMouseDown = useCallback(
-    (e: React.MouseEvent, id: string, stickerX: number, stickerY: number) => {
+    (e: React.MouseEvent | React.TouchEvent, id: string, stickerX: number, stickerY: number) => {
       e.preventDefault();
       e.stopPropagation();
       setSelectedStickerId(id);
       const el = stripOverlayRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      const cursorX = (e.clientX - rect.left) / rect.width;
-      const cursorY = (e.clientY - rect.top) / rect.height;
+      const { clientX, clientY } = getPointerPosition(e);
+      const cursorX = (clientX - rect.left) / rect.width;
+      const cursorY = (clientY - rect.top) / rect.height;
       dragOffsetRef.current = { dx: cursorX - stickerX, dy: cursorY - stickerY };
       setDraggingId(id);
     },
     []
   );
 
-  const handleResizeHandleMouseDown = useCallback((e: React.MouseEvent, corner: "nw" | "ne" | "se" | "sw") => {
+  const handleResizeHandleMouseDown = useCallback((e: React.MouseEvent | React.TouchEvent, corner: "nw" | "ne" | "se" | "sw") => {
     e.preventDefault();
     e.stopPropagation();
     setResizingHandle(corner);
   }, []);
 
   const handleRotationHandleMouseDown = useCallback(
-    (e: React.MouseEvent, id: string) => {
+    (e: React.MouseEvent | React.TouchEvent, id: string) => {
       e.preventDefault();
       e.stopPropagation();
       const sticker = stickers.find((s) => s.id === id);
@@ -348,7 +357,8 @@ export default function PhotoboothModal({ isOpen }: { isOpen: boolean }) {
       const rect = stripOverlayRef.current.getBoundingClientRect();
       const cx = rect.left + sticker.x * rect.width;
       const cy = rect.top + sticker.y * rect.height;
-      const angleDeg = (Math.atan2(e.clientY - cy, e.clientX - cx) * 180) / Math.PI;
+      const { clientX, clientY } = getPointerPosition(e);
+      const angleDeg = (Math.atan2(clientY - cy, clientX - cx) * 180) / Math.PI;
       rotationStartRef.current = { angle: angleDeg, rotation: sticker.rotation ?? 0 };
       setRotatingStickerId(id);
     },
@@ -603,6 +613,8 @@ export default function PhotoboothModal({ isOpen }: { isOpen: boolean }) {
                 onMouseMove={handleStripMouseMove}
                 onMouseLeave={handleStripMouseUp}
                 onMouseUp={handleStripMouseUp}
+                onTouchMove={handleStripMouseMove}
+                onTouchEnd={handleStripMouseUp}
                 onClick={handleStripAreaClick}
               >
                 {stickers.map((s) => {
@@ -620,6 +632,7 @@ export default function PhotoboothModal({ isOpen }: { isOpen: boolean }) {
                         height: size,
                       }}
                       onMouseDown={(e) => handleStickerMouseDown(e, s.id, s.x, s.y)}
+                      onTouchStart={(e) => handleStickerMouseDown(e, s.id, s.x, s.y)}
                       onDoubleClick={(e) => {
                         e.stopPropagation();
                         removeSticker(s.id);
@@ -631,6 +644,7 @@ export default function PhotoboothModal({ isOpen }: { isOpen: boolean }) {
                           <span
                             className="strip-rotate-handle"
                             onMouseDown={(e) => handleRotationHandleMouseDown(e, s.id)}
+                            onTouchStart={(e) => handleRotationHandleMouseDown(e, s.id)}
                             title="ลากเพื่อหมุน"
                           >
                             <RotateIcon />
@@ -653,6 +667,7 @@ export default function PhotoboothModal({ isOpen }: { isOpen: boolean }) {
                               key={corner}
                               className={`strip-resize-handle strip-resize-handle-${corner}`}
                               onMouseDown={(e) => handleResizeHandleMouseDown(e, corner)}
+                              onTouchStart={(e) => handleResizeHandleMouseDown(e, corner)}
                               title="ลากเพื่อย่อ/ขยาย"
                             >
                               <ResizeHandleArrow corner={corner} />
