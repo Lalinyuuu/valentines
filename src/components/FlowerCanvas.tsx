@@ -1,14 +1,30 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Group } from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment } from "@react-three/drei";
 import { Suspense } from "react";
 
+function useResponsiveScale(desktopScale: number, mobileScale: number, breakpoint = 768) {
+  const [scale, setScale] = useState(desktopScale);
+
+  useEffect(() => {
+    const update = () => {
+      setScale(window.innerWidth < breakpoint ? mobileScale : desktopScale);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [desktopScale, mobileScale, breakpoint]);
+
+  return scale;
+}
+
 function FlowerModel() {
   const groupRef = useRef<Group>(null);
   const { scene } = useGLTF("/models/flower.glb");
+  const scale = useResponsiveScale(3.5, 2.2);
 
   useFrame((_, delta) => {
     const group = groupRef.current;
@@ -19,7 +35,7 @@ function FlowerModel() {
 
   return (
     <group ref={groupRef}>
-      <primitive object={scene} scale={3.5} position={[0, -0.2, 0]} />
+      <primitive object={scene} scale={scale} position={[0, -0.2, 0]} />
     </group>
   );
 }
