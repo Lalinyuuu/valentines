@@ -245,6 +245,7 @@
   height: auto;
   object-fit: contain;
   border-radius: 12px;
+  background: #fff;
   flex: 1;
   min-height: 0;
 }
